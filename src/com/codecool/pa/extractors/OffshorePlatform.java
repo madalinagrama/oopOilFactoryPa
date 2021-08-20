@@ -14,11 +14,11 @@ public class OffshorePlatform extends Extractor{
         this.workers = new ArrayList<>();
     }
 
-    public boolean checkExtraction() {
+    private boolean checkExtraction() {
         return getExtractionPerformance() < 70;
     }
 
-    public boolean hasMedic () {
+    private boolean hasMedic () {
         for (Worker worker : workers) {
             if (worker.getPosition() == Position.MEDIC)
                 return true;
@@ -26,7 +26,7 @@ public class OffshorePlatform extends Extractor{
         return false;
     }
 
-    public boolean checkDaysOnBoard() {
+    private boolean checkDaysOnBoard() {
         for (Worker worker : workers) {
             if (worker.getDaysOnPlatform() >= 14)
                 return true;
@@ -36,7 +36,7 @@ public class OffshorePlatform extends Extractor{
 
     @Override
     public boolean reportFaults() {
-        return checkDaysOnBoard() || hasMedic() || checkExtraction();
+        return checkDaysOnBoard() || !hasMedic() || checkExtraction();
     }
 
     public List<Worker> getWorkers() {
