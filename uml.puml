@@ -1,0 +1,63 @@
+@startuml
+
+OffshorePlatform o-- Worker
+OilCompany o-- Extractor
+Worker -- Position
+
+class OilCompany {
+- extractors : List<Extractor>
+
++ getNumberOfExtractorsWithFaults () : long
++ getBestExtractors() : List<Extractor>
+
+}
+
+abstract class Extractor {
+- serialNumber : String
+- capacity : double
+- extractedQuantity : double
+
++ getExtractionPerformance() : double
++ abstract reportFaults() : boolean
+}
+
+class FixesTerrestrial extends Extractor {
+- location : String
+
++ reportFaults() : void
+}
+
+class MobileTerrestrial extends Extractor {
+- location : String
+
++ reportFaults() : boolean
+}
+
+class OffshorePlatform extends Extractor {
+- workers : List<Worker>
+
++ reportFaults() : boolean
+
++ checkExtraction () : boolean
++ hasMedic() : boolean
++ checkDaysOnBoard () : boolean
+}
+
+class Worker {
+- name : String
+- position : Position
+- daysOnPlatform : int
+
+
+}
+
+enum Position {
+MANUAL_WORKER,
+MEDIC,
+MANAGER
+}
+
+
+
+
+@enduml
